@@ -15,7 +15,7 @@
             <?php echo view('includes/topbar.php') ?>           
             <?php echo view('includes/breadcrumbs.php') ?> 
                 <div class="main-content-inner">
-                    <?php echo $session->get('user_status'); ?>
+                    <?php echo $session->get('isLoggedin'); ?>
                 </div>
         </div>
     </div>     

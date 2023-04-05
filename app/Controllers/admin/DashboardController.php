@@ -16,17 +16,20 @@ class DashboardController extends BaseController
        $this->session = \Config\Services::session();
        $this->session_id = $this->session->get('user_id');
 
-        if (!$this->session_id) {
-
-             return redirect()->to('login'); 
-        }
+    
         
 
     }
     public function index()
     {   
-        $data['title'] = 'Dashboard';
-        $data['session'] = $this->session;
-        return view('admin/dashboard/index',$data);
+
+        if ($this->session->get('user_type') == 'admin') {
+            $data['title'] = 'Dashboard';
+            $data['session'] = $this->session;
+            return view('admin/dashboard/index',$data);
+        }else {
+           return redirect()->back();
+        }
+      
     }
 }

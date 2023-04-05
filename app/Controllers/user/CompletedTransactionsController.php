@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Controllers\User;
 
 use App\Controllers\BaseController;
 
@@ -8,9 +8,9 @@ class CompletedTransactionsController extends BaseController
 {
     public function index()
     {
-         if (session()->get('user_type') == 'admin') {
-            $data['title'] = 'Completed Transaction';
-            return view('admin/transactions/completed/index',$data);
+        if (session()->get('user_type') == 'user') {
+        $data['title'] = 'Completed Transactions';
+        return view('user/transactions/completed/index',$data);
         }else {
            return redirect()->back();
         }

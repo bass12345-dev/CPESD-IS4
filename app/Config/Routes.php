@@ -11,7 +11,7 @@ $routes = Services::routes();
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('admin/DashboardController');
+$routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -31,15 +31,16 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 
 //Authentication
-$routes->get('/login', 'auth\LoginController::index');
+$routes->get('/login', 'auth\LoginController::index',['filter' => 'usercheck']);
 
 
 //Admin Panel
-$routes->get('/', 'admin\DashboardController::index',['filter' => 'authGuard']);
+$routes->get('/', 'Home::index');
 
 //User Panel
 $routes->group('admin', function($routes) {
-    $routes->add('completed-transactions', 'admin\CompletedTransactionsController::index');
+    $routes->add('dashboard', 'admin\DashboardController::index',['filter' => 'authGuard']);
+    $routes->add('completed-transactions', 'admin\CompletedTransactionsController::index',['filter' => 'authGuard']);
     $routes->add('pending-transactions', 'admin\PendingTransactionsController::index',['filter' => 'authGuard']);
     $routes->add('cso', 'admin\CsoController::index',['filter' => 'authGuard']);
     $routes->add('responsibility-center', 'admin\ResponsibilityCenterController::index',['filter' => 'authGuard']);
@@ -55,6 +56,10 @@ $routes->group('admin', function($routes) {
 //User Panel
 $routes->group('user', function($routes) {
     $routes->add('dashboard', 'user\DashboardController::index',['filter' => 'authGuard']);
+    $routes->add('completed-transactions', 'user\CompletedTransactionsController::index',['filter' => 'authGuard']);
+    $routes->add('pending-transactions', 'user\PendingTransactionsController::index',['filter' => 'authGuard']);
+    
+
     
 });
 

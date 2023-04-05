@@ -42,7 +42,7 @@ class Auth extends BaseController
                          $data['res'] = true;
                             $data['message'] = 'Success';
                             if ($user->user_type == 'admin') {
-                                $data['redirect'] = base_url();
+                                $data['redirect'] = base_url('admin/dashboard');
                             }else if ($user->user_type == 'user'){
                                 $data['redirect'] = base_url('user/dashboard');
                             }
@@ -78,7 +78,7 @@ class Auth extends BaseController
 
 
     public function sign_out(){
-        $array_items = ['user_id', 'user_type', 'user_status'];
+        $array_items = ['user_id', 'user_type', 'user_status','isLoggedin'];
         $this->session->remove($array_items);
         return redirect()->to('login');
     }

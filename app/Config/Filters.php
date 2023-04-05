@@ -28,6 +28,7 @@ class Filters extends BaseConfig
         'toolbar'  => \CodeIgniter\Filters\DebugToolbar::class,
         'honeypot' => \CodeIgniter\Filters\Honeypot::class,
         'authGuard' => \App\Filters\AuthGuard::class,
+        'usercheck' => \App\Filters\UserCheck::class,
     ];
     /**
      * List of filter aliases that are always
