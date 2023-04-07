@@ -18,4 +18,18 @@ class CsoController extends BaseController
            return redirect()->back();
         }
     }
+
+
+    public function view_officers(){
+
+         if (session()->get('user_type') == 'admin') {
+
+            $data['title'] = 'CSO';
+            return view('admin/cso/view_officers/index',$data);
+            
+        }else {
+           return redirect()->back();
+        }
+        
+    }
 }

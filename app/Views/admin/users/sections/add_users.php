@@ -21,7 +21,7 @@
          </div>
          <div class="form-group ">
             <label for="inputEmail4">User Type<span class="text-danger">*</span></label>
-            <select id="inputState" name="user_type " class="form-control" style="border: 1px solid;">
+            <select id="inputState" name="user_type " class="custom-select" style="border: 1px solid;">
                <option selected value="user">User</option>
              
             </select>

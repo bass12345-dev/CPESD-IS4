@@ -37,7 +37,7 @@ $routes->get('/login', 'auth\LoginController::index',['filter' => 'usercheck']);
 //Admin Panel
 $routes->get('/', 'Home::index');
 
-//User Panel
+//Admin Panel
 $routes->group('admin', function($routes) {
     $routes->add('dashboard', 'admin\DashboardController::index',['filter' => 'authGuard']);
     $routes->add('completed-transactions', 'admin\CompletedTransactionsController::index',['filter' => 'authGuard']);
@@ -53,6 +53,13 @@ $routes->group('admin', function($routes) {
     $routes->add('activity-logs', 'admin\ActivityLogsController::index',['filter' => 'authGuard']);
 });
 
+
+//View officers
+$routes->get('admin/cso/view-officers', 'admin\CsoController::view_officers',['filter' => 'authGuard']);
+
+
+
+
 //User Panel
 $routes->group('user', function($routes) {
     $routes->add('dashboard', 'user\DashboardController::index',['filter' => 'authGuard']);
@@ -64,6 +71,8 @@ $routes->group('user', function($routes) {
     
     
 });
+
+
 
 //Sign out
 $routes->get('api/auth/sign_out', 'api\Auth::sign_out');
@@ -92,6 +101,14 @@ $routes->post('api/get-responsiblity', 'api\Responsibility::get_responsibility')
 //Responsible Section
 $routes->post('api/add-responsible', 'api\ResponsibleSection::add_responsible');
 $routes->post('api/get-responsible', 'api\ResponsibleSection::get_responsible');
+
+//Type of Activity
+$routes->post('api/add-type-of-activity', 'api\TypeOfActivity::add_type_of_activity');
+$routes->post('api/get-activities', 'api\TypeOfActivity::get_activities');
+
+//Under Type of Activity 
+$routes->post('api/add-under-type-of-activity', 'api\TypeOfActivity::add_under_type_of_activity');
+
 
 
 /*

@@ -35,7 +35,7 @@
                               <th>Contact Number</th>
                               <th>Telephone Number</th>
                               <th>Email Address</th>
-                              <th>Type</th>
+                              <th>Classification</th>
                               <th>Actions</th>
                            </tr>
                         </thead>

@@ -118,7 +118,8 @@ class Cso extends BaseController
                 'contact_number' => $row->contact_number,
                 'telephone_number' => $row->telephone_number,    
                 'email_address' => $row->email_address,
-                'type_of_cso' => $row->type_of_cso
+                'type_of_cso' => strtoupper($row->type_of_cso),
+
 
             );
         } 
