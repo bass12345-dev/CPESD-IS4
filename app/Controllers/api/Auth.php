@@ -36,7 +36,7 @@ class Auth extends BaseController
                 $data['response'] = true;
                 $user = $this->CustomModel->getwhere($this->users_table,$where)[0];
 
-                if ($pass == $user->password) {
+                if (password_verify($pass,$user->password) ) {
 
                     if ($user->user_status == 'active') {
                          $data['res'] = true;

@@ -11,7 +11,7 @@ class Users extends Migration
         $this->forge->addField([
             'user_id' => [
                 'type'           => 'INT',
-                'constraint'     => 10,
+                'constraint'     => 50,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
@@ -28,6 +28,14 @@ class Users extends Migration
                 'constraint' => '50',
             ],
             'extension' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '10',
+            ],
+            'contact_number' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '10',
+            ],
+            'email_address' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '10',
             ],
@@ -51,6 +59,10 @@ class Users extends Migration
             'password' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
+            ],
+            'user_created' => [
+                'type'       => 'DATETIME',
+                
             ],
             
         ]);

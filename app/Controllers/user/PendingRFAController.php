@@ -10,8 +10,8 @@ class PendingRFAController extends BaseController
     {
         
         if (session()->get('user_type') == 'user') {
-        $data['title'] = 'Pending Transactions';
-        return view('user/transactions/pending/index',$data);
+        $data['title'] = 'Pending RFA';
+        return view('user/rfa/pending/index',$data);
         }else {
            return redirect()->back();
         }

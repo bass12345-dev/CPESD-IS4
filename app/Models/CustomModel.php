@@ -18,6 +18,16 @@ class CustomModel extends Model
     }
    // Get
 
+
+    public function get_all_desc($table,$order_key,$order_by){
+         
+        $builder = $this->db->table($table);
+        $builder->orderBy($order_key, $order_by);
+        $query = $builder->get()->getResult();
+        return $query;
+        
+    }
+
     public function getwhere($table,$where){
          
         $builder = $this->db->table($table);
@@ -40,7 +50,23 @@ class CustomModel extends Model
 
     // Add
 
+    public function addData($table,$data){
+
+        $builder = $this->db->table($table);
+        return $builder->insert($data);
+        
+    }
+
     // Update
+
+    public function updatewhere($where,$data,$table){
+
+        $builder = $this->db->table($table);
+        $builder->where($where);
+        $query = $builder->update($data);
+        return $query;
+
+    }
 
     // Delete
 }

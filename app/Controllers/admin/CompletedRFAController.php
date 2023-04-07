@@ -8,6 +8,11 @@ class CompletedRFAController extends BaseController
 {
     public function index()
     {
-        //
+        if (session()->get('user_type') == 'admin') {
+            $data['title'] = 'Completed RFA';
+            return view('admin/rfa/completed/index',$data);
+        }else {
+           return redirect()->back();
+        }
     }
 }

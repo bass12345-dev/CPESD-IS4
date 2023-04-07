@@ -25,7 +25,7 @@
                             </div>
                             <div class="form-gp">
                                 <label for="exampleInputPassword1">Password</label>
-                                    <input type="text" id="exampleInputPassword1" name="password" style="-webkit-text-security: disc;" required>
+                                    <input type="password" id="exampleInputPassword1" name="password" style="-webkit-text-security: disc;" required>
                                     <i class="ti-lock lock"></i>
                             </div>
                             <button id="form_submit" type="submit" class="btn  btn-lg btn-block"  style="background-color: #3F6BA4; color: #fff; font-size: 15px;" > Log In </button>

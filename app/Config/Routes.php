@@ -47,7 +47,7 @@ $routes->group('admin', function($routes) {
     $routes->add('responsible-section', 'admin\ResponsibleSectionController::index',['filter' => 'authGuard']);
     $routes->add('type-of-activity', 'admin\TypeofActivityController::index',['filter' => 'authGuard']);
     $routes->add('users', 'admin\UserController::index',['filter' => 'authGuard']);
-    $routes->add('complete-rfa', 'admin\PendingRFAController::index',['filter' => 'authGuard']);
+    $routes->add('completed-rfa', 'admin\PendingRFAController::index',['filter' => 'authGuard']);
     $routes->add('pending-rfa', 'admin\CompletedRFAController::index',['filter' => 'authGuard']);
     $routes->add('back-up-database', 'admin\BackupDatabaseController::index',['filter' => 'authGuard']);
     $routes->add('activity-logs', 'admin\ActivityLogsController::index',['filter' => 'authGuard']);
@@ -58,8 +58,10 @@ $routes->group('user', function($routes) {
     $routes->add('dashboard', 'user\DashboardController::index',['filter' => 'authGuard']);
     $routes->add('completed-transactions', 'user\CompletedTransactionsController::index',['filter' => 'authGuard']);
     $routes->add('pending-transactions', 'user\PendingTransactionsController::index',['filter' => 'authGuard']);
+    $routes->add('completed-rfa', 'user\PendingRFAController::index',['filter' => 'authGuard']);
+    $routes->add('pending-rfa', 'user\CompletedRFAController::index',['filter' => 'authGuard']);
+    $routes->add('activity-logs', 'user\ActivityLogsController::index',['filter' => 'authGuard']);
     
-
     
 });
 
@@ -68,8 +70,30 @@ $routes->get('api/auth/sign_out', 'api\Auth::sign_out');
 
 
 //Api
-
+//Login
 $routes->post('api/auth/verify', 'api\Auth::verify');
+//Database
+$routes->post('api/back-up-db', 'api\BackupDB::index');
+$routes->post('api/get-database', 'api\BackupDB::get_database');
+//Users
+$routes->post('api/add-user', 'api\Users::add_user');
+$routes->post('api/get-active-user', 'api\Users::get_user_active');
+$routes->post('api/get-inactive-user', 'api\Users::get_user_inactive');
+$routes->post('api/update-user-status', 'api\Users::update_user_status');
+
+//CSO
+$routes->post('api/add-cso', 'api\Cso::add_cso');
+$routes->post('api/get-cso', 'api\Cso::get_cso');
+
+//Responsibility Center
+$routes->post('api/add-responsibility', 'api\Responsibility::add_responsibiliy');
+$routes->post('api/get-responsiblity', 'api\Responsibility::get_responsibility');
+
+//Responsible Section
+$routes->post('api/add-responsible', 'api\ResponsibleSection::add_responsible');
+$routes->post('api/get-responsible', 'api\ResponsibleSection::get_responsible');
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

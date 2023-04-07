@@ -17,7 +17,7 @@ class DashboardController extends BaseController
     {
         if ($this->session->get('user_type') == 'user') {
         $data['title'] = 'Dashboard';
-        $data['session'] = $this->session;
+       
         return view('user/dashboard/index',$data);
         }else {
            return redirect()->back();

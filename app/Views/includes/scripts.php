@@ -1,3 +1,4 @@
+    <script type="text/javascript">var base_url = '<?php echo site_url(); ?>';</script>
     <script src="<?php echo site_url(); ?>assets/js/vendor/modernizr-2.8.3.min.js"></script>
     <!-- offset area end -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>

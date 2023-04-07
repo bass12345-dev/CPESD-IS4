@@ -15,7 +15,8 @@
             <?php echo view('includes/topbar.php') ?>           
             <?php echo view('includes/breadcrumbs.php') ?> 
                 <div class="main-content-inner">
-                    <?php echo $session->get('isLoggedin'); ?>
+                     <?php echo view('admin/dashboard/sections/count_section'); ?>
+                     <?php echo view('admin/dashboard/sections/graph_section'); ?>
                 </div>
         </div>
     </div>     
