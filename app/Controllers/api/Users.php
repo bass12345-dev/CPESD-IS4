@@ -26,7 +26,7 @@ class Users extends BaseController
                 'first_name' => $this->request->getPost('first_name'),
                 'middle_name' => ($this->request->getPost('middle_name') == '') ?  '' : $this->request->getPost('middle_name') ,
                 'last_name' => $this->request->getPost('last_name'),
-                'extension' => ($this->request->getPost('user_type') == '') ?  '' : $this->request->getPost('extension') ,
+                'extension' => ($this->request->getPost('extension') == '') ?  '' : $this->request->getPost('extension') ,
                 'user_type' => $this->request->getPost('user_type'),
                 'username' => $this->request->getPost('username'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),

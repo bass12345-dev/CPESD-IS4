@@ -8,6 +8,7 @@ use App\Models\CustomModel;
 class Cso extends BaseController
 {
     public $cso_table = 'cso';
+    public $cso_officer_table = 'cso_officers';
     public $order_by_desc = 'desc';
     public $order_by_asd = 'asc';
     protected $request;
@@ -149,5 +150,53 @@ class Cso extends BaseController
 
         echo json_encode($data);
     }
+
+
+
+
+
+//CSO Officers
+
+public function add_cso_officer()
+{
+if ($this->request->isAJAX()) {
+    
+            $data = array(
+                'officer_cso_id' => $this->request->getPost('cso_id'),
+                'first_name' => $this->request->getPost('first_name'),
+                'middle_name' => ($this->request->getPost('middle_name') == '') ?  '' : $this->request->getPost('middle_name') ,
+                'last_name' => $this->request->getPost('last_name'),
+                'extension' => ($this->request->getPost('extension') == '') ?  '' : $this->request->getPost('extension') ,
+                'cso_position' => $this->request->getPost('cso_position'),
+                'contact_number' => $this->request->getPost('contact_number'),
+                'email_address' => $this->request->getPost('email'),
+                'cso_officer_created' =>  date('Y-m-d H:i:s', time()),
+                
+            
+            );
+
+        
+         $result  = $this->CustomModel->addData($this->cso_officer_table,$data);
+
+            if ($result) {
+
+                $data = array(
+                'message' => 'Data Saved Successfully',
+                'response' => true
+                );
+            }else {
+
+                $data = array(
+                'message' => 'Error',
+                'response' => false
+                );
+            }
+    
+
+        echo json_encode($data);
+    }
+    
+
+ }
 }
 
