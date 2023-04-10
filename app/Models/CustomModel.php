@@ -39,6 +39,15 @@ class CustomModel extends Model
         
     }
 
+    public function get_all_order_by($table,$order_key,$order_by){
+         
+        $builder = $this->db->table($table);
+        $builder->orderBy($order_key, $order_by);
+        $query = $builder->get()->getResult();
+        return $query;
+        
+    }
+
     public function getwhere_orderby($table,$where,$order_key,$order_by){
          
         $builder = $this->db->table($table);
@@ -58,6 +67,14 @@ class CustomModel extends Model
          
         $builder = $this->db->table($table);
         $builder->where($where);
+        $query = $builder->countAllResults();
+        return $query; 
+    }
+
+    public function count_all_order_by($table,$order_key,$order_by){
+         
+        $builder = $this->db->table($table);
+        $builder->orderBy($order_key, $order_by);
         $query = $builder->countAllResults();
         return $query;
         

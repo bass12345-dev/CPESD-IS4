@@ -69,19 +69,18 @@ $routes->group('user', function($routes) {
     $routes->add('completed-rfa', 'user\PendingRFAController::index',['filter' => 'authGuard']);
     $routes->add('pending-rfa', 'user\CompletedRFAController::index',['filter' => 'authGuard']);
     $routes->add('activity-logs', 'user\ActivityLogsController::index',['filter' => 'authGuard']);
-    
-    
 });
 
+$routes->get('user/pending-transactions/add-transaction', 'user\PendingTransactionsController::add_transaction',['filter' => 'authGuard']);
 
 
 //Sign out
 $routes->get('api/auth/sign_out', 'api\Auth::sign_out');
 
-
-//Api
 //Login
 $routes->post('api/auth/verify', 'api\Auth::verify');
+
+//Admin Api
 //Database
 $routes->post('api/back-up-db', 'api\BackupDB::index');
 $routes->post('api/get-database', 'api\BackupDB::get_database');
@@ -113,6 +112,12 @@ $routes->post('api/get-activities', 'api\TypeOfActivity::get_activities');
 
 //Under Type of Activity 
 $routes->post('api/add-under-type-of-activity', 'api\TypeOfActivity::add_under_type_of_activity');
+
+
+//User Apin:
+$routes->post('api/get-last-pmas-number', 'api\PendingTransactions::get_last_pmas_number');
+
+
 
 
 

@@ -23,7 +23,7 @@
                                         <div class="col-md-12 ">
                                             <div class="row">
                                                 <div class="col-md-12"> 
-                                                    <a href="" class="btn  mb-3 mt-2 sub-button pull-right" > Add Transactions</a>   
+                                                    <a href="javascript:;" class="btn  mb-3 mt-2 sub-button pull-right" id="add_transactions" > Add Transactions</a>   
                                                     <a href="javascript:;" class="btn  mb-3 mt-2 sub-button pull-right mr-2" id="reload_pending" > Reload <i class="ti-loop"></i></a>
                                                 </div>
                                             </div>
@@ -53,6 +53,13 @@
                 </div>
         </div>
     </div>     
-<?php echo view('includes/scripts.php') ?>   
+<?php echo view('includes/scripts.php') ?>  
+<script>
+       $(document).on('click','a#add_transactions',function (e) {
+
+        window.open( base_url + 'user/pending-transactions/add-transaction','_blank');
+
+        })
+</script> 
 </body>
 </html>

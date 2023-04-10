@@ -186,7 +186,7 @@ var chart = new OrgChart(document.getElementById("tree"), {
 function load_organization_chart(){
 
    $.ajax({
-            url: base_url + 'api/+---*-      ',
+            url: base_url + 'api/get-officers      ',
             type: "POST",
             data : {cso_id :"<?php echo $_GET['id'] ?>"},
             dataType: "json",
