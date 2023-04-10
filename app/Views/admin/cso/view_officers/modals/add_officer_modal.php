@@ -9,13 +9,13 @@
          </div>
          <form id="add_officer_form" class="p-2">
             <div class="modal-body">
-               <input class="text" name="cso_id" value="<?php echo $_GET['id'] ?>">
+               <input type="hidden" name="cso_id" value="<?php echo $_GET['id'] ?>">
             <div class="form-group">
-                  <div class="col-12">First Name<span class="text-danger">*</span></div>
+                  <div class="col-12">Position<span class="text-danger">*</span></div>
                   <select class="custom-select"  name="cso_position" style="border: 1px solid;height: 45px;" required>
                            <option  value="" selected>Select Position</option>
                              <?php foreach ($positions as $row) { ?>
-                              <option  value="<?php echo $row ?>"><?php echo $row; ?></option>
+                              <option  value="<?php echo $row['position'] ?>-<?php echo $row['number'] ?>"><?php echo $row['position']; ?></option>
                               <?php } ?>
                   </select>
                </div>

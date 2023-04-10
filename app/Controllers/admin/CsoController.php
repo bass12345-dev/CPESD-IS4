@@ -43,6 +43,58 @@ class CsoController extends BaseController
     }
 
 
+    public function view_cso(){
+
+        if (session()->get('user_type') == 'admin') {
+           
+           $verify =  $this->CustomModel->countwhere($this->cso_table,array('cso_id' => $_GET['id']));
+       
+           if($verify) {
+            
+            // $array = array(
+            //         [
+            //             'position' => 'Pres',
+            //             'number' => 1
+            //         ],
+            //         [
+            //             'position' => 'Vice Pres',
+            //             'number' => 2
+            //         ]
+
+            // );
+            // echo json_encode($array);
+            $i = 1;
+            $a = [];
+            foreach ($this->position_array as $row) {
+            
+                $a[] =  array(  
+   
+                    'position' => $row,
+                    'number' => $i++
+                );
+   
+           }
+
+               $data['title'] = $this->CustomModel->getwhere($this->cso_table,array('cso_id' => $_GET['id']))[0]->cso_name;
+               $data['cso_type'] = strtoupper($this->CustomModel->getwhere($this->cso_table,array('cso_id' => $_GET['id']))[0]->type_of_cso);
+            //    $data['positions'] = $this->position_array; 
+                $data['positions'] = $a; 
+               return view('admin/cso/view/index',$data);
+           }else {
+               return redirect()->back();
+           }
+           
+ 
+
+          
+           
+       }else {
+          return redirect()->back();
+       }
+       
+   }
+
+
     public function view_officers(){
 
          if (session()->get('user_type') == 'admin') {

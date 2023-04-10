@@ -163,10 +163,6 @@
                                               <div class="dropdown-menu">\
                                                 <a class="dropdown-item" href="javascript:;" data-id="'+data['cso_id']+'"  id="view-cso" > <i class="ti-eye"></i> View Information</a>\
                                                 <hr>\
-                                                <a class="dropdown-item" href="javascript:;" data-id="'+data['cso_id']+'"  id="view-cso-officers" > <i class="ti-eye"></i> View Officers</a>\
-                                                <hr>\
-                                                <a class="dropdown-item" href="javascript:;" data-id="'+data['cso_id']+'" id="view_trans"> <i class="ti-eye"></i> View Transactions</a>\
-                                                <hr>\
                                                 <a class="dropdown-item text-danger" href="javascript:;" data-id="'+data['cso_id']+'" id="delete-cso"  id="view_transaction_pending" > <i class="ti-trash"></i> Delete</a>\
                                               </di>';
                                         }
@@ -195,6 +191,13 @@
 
 
     get_cso();
+
+
+    $(document).on('click','a#view-cso',function (e) {
+
+        window.open( base_url + 'admin/cso/cso-information?id=' + $(this).data('id'),'_blank');
+
+        })
 
 
     $(document).on('click','a#view-cso-officers',function (e) {

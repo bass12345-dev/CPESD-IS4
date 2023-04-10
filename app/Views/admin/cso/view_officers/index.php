@@ -19,6 +19,36 @@
                   height: 180vh;
                }
 
+               #exTab1 .tab-content {
+  color : white;
+  background-color: #428bca;
+  padding : 5px 15px;
+}
+
+#exTab2 h3 {
+  color : white;
+  background-color: #428bca;
+  padding : 5px 15px;
+}
+
+/* remove border radius for the tab */
+
+#exTab1 .nav-pills > li > a {
+  border-radius: 0;
+}
+
+/* change border radius for the tab , apply corners on top*/
+
+#exTab3 .nav-pills > li > a {
+  border-radius: 4px 4px 0 0 ;
+}
+
+#exTab3 .tab-content {
+  color : white;
+  background-color: #428bca;
+  padding : 5px 15px;
+}
+
 
       </style>
    </head>
@@ -84,6 +114,7 @@
                   </div>
                </div>
             </div>
+      
          </div>
       </div>
       <?php echo view('admin/cso/view_officers/modals/add_officer_modal'); ?>   
@@ -132,7 +163,7 @@ $('#add_officer_form').on('submit', function(e) {
                                 text: data.message,
                                 className: "info",
                                 style: {
-                                    "background" : "linear-gradient(to right, #00b09b, #96c93d)",
+                                    "background" : "#e01c0d",
                                     "height" : "60px",
                                     "width" : "350px",
                                     "font-size" : "20px"

@@ -19,14 +19,7 @@ class CustomModel extends Model
    // Get
 
 
-    public function get_all_desc($table,$order_key,$order_by){
-         
-        $builder = $this->db->table($table);
-        $builder->orderBy($order_key, $order_by);
-        $query = $builder->get()->getResult();
-        return $query;
-        
-    }
+  
 
     public function getwhere($table,$where){
          
@@ -36,6 +29,28 @@ class CustomModel extends Model
         return $query;
         
     }
+
+    public function get_all_desc($table,$order_key,$order_by){
+         
+        $builder = $this->db->table($table);
+        $builder->orderBy($order_key, $order_by);
+        $query = $builder->get()->getResult();
+        return $query;
+        
+    }
+
+    public function getwhere_orderby($table,$where,$order_key,$order_by){
+         
+        $builder = $this->db->table($table);
+        $builder->where($where);
+        $builder->orderBy($order_key, $order_by);
+        $query = $builder->get()->getResult();
+        return $query;
+        
+    }
+    
+
+
 
     // Count
 

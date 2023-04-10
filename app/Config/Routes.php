@@ -56,6 +56,7 @@ $routes->group('admin', function($routes) {
 
 //View officers
 $routes->get('admin/cso/view-officers', 'admin\CsoController::view_officers',['filter' => 'authGuard']);
+$routes->get('admin/cso/cso-information', 'admin\CsoController::view_cso',['filter' => 'authGuard']);
 
 
 
@@ -96,6 +97,7 @@ $routes->post('api/get-cso', 'api\Cso::get_cso');
 
 //CSO Officers
 $routes->post('api/add-officer', 'api\Cso::add_cso_officer');
+$routes->post('api/get-officers', 'api\Cso::get_officers');
 
 //Responsibility Center
 $routes->post('api/add-responsibility', 'api\Responsibility::add_responsibiliy');

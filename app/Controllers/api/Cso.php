@@ -10,9 +10,17 @@ class Cso extends BaseController
     public $cso_table = 'cso';
     public $cso_officer_table = 'cso_officers';
     public $order_by_desc = 'desc';
-    public $order_by_asd = 'asc';
+    public $order_by_asc = 'asc';
     protected $request;
     protected $CustomModel;
+    public $position_array = [
+        'President/BOD Chairperson/BOT',
+        'Vice President/BOD Vice Chairperson',
+        'Secretary',
+        'Treasurer',
+        'Auditor',
+        'Manager'
+        ];
 
     public function __construct()
     {
@@ -160,9 +168,18 @@ class Cso extends BaseController
 public function add_cso_officer()
 {
 if ($this->request->isAJAX()) {
+        // $pieces = explode("-",$this->request->getPost('cso_position'));
+        // $number =  $pieces[1];
+        // $pieces2 = explode("-",$this->request->getPost('cso_position'));
+        // $position =  $pieces2[0];
+
     
+   
+ 
             $data = array(
                 'officer_cso_id' => $this->request->getPost('cso_id'),
+                'cso_position' => explode("-",$this->request->getPost('cso_position'))[0],
+                'position_number' => explode("-",$this->request->getPost('cso_position'))[1],
                 'first_name' => $this->request->getPost('first_name'),
                 'middle_name' => ($this->request->getPost('middle_name') == '') ?  '' : $this->request->getPost('middle_name') ,
                 'last_name' => $this->request->getPost('last_name'),
@@ -175,8 +192,20 @@ if ($this->request->isAJAX()) {
             
             );
 
+
+
+        $verify = $this->CustomModel->countwhere($this->cso_officer_table,array('cso_position' => $data['cso_position'],'position_number' => $data['position_number'],'officer_cso_id' => $data['officer_cso_id']));
         
-         $result  = $this->CustomModel->addData($this->cso_officer_table,$data);
+        if ($verify > 0) {
+
+            $data = array(
+               'message' => 'Position is already taken',
+               'response' => false
+               );
+             
+          }else {
+
+            $result  = $this->CustomModel->addData($this->cso_officer_table,$data);
 
             if ($result) {
 
@@ -191,11 +220,47 @@ if ($this->request->isAJAX()) {
                 'response' => false
                 );
             }
+
+          }
+        
+         
     
 
         echo json_encode($data);
     }
     
+
+ }
+
+
+ public function get_officers(){
+
+    $data = [];
+    $pid = 0;
+    $id = 1;
+    $item = $this->CustomModel->getwhere_orderby($this->cso_officer_table,array('officer_cso_id' => $this->request->getPost('cso_id')),'position_number',$this->order_by_asc); 
+    foreach ($item as $row) {
+        
+            $data[] = array(
+                    'id' => $id++,
+                    'pid' => $pid++,
+                    'name' => $row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension,
+                    'title' => explode("-",$row->cso_position)[0], 
+                    'img' => "https://www.pngitem.com/pimgs/m/504-5040528_empty-profile-picture-png-transparent-png.png",
+                    'contact_number' => $row->contact_number, 
+                    'email_address' => $row->email_address,
+                    'cso_officer_id' => $row->cso_officer_id, 
+                    
+                    
+
+                   
+            );
+    }
+
+    echo json_encode($data);
+
+    
+
 
  }
 }
