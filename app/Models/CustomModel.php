@@ -61,6 +61,7 @@ class CustomModel extends Model
 
 
 
+
     // Count
 
     public function countwhere($table,$where){

@@ -135,7 +135,7 @@ jQuery(document).ready(function() {
 
 
 
-$('#id_0').datetimepicker({
+        $('#date_and_time').datetimepicker({
             "allowInputToggle": true,
             "showClose": true,
             "showClear": true,
@@ -176,8 +176,10 @@ get_last_pmas_number();
 
 
 $(document).on('change','select#type_of_activity_select',function (e) {
+    $("#select_under_type option").remove();
     var id = $('#type_of_activity_select').find('option:selected').val();
-
+    var text = $('#type_of_activity_select').find('option:selected').text().toString().toLowerCase();
+    $('input[name=select_under_type_id]').val('');
     if(!id){
        alert('Please Select Type Of Activity');
     }else {
@@ -199,34 +201,218 @@ $(document).on('change','select#type_of_activity_select',function (e) {
             },
             // Succes Function
             success: function(result) {
+
+                if(text == '<?php echo $training_text ?>') {
+                
                 $('#select_under_activity_modal').modal('show');
                 var $dropdown = $("#select_under_type");
-                var option = '';
-                if(result.length){
-                        for (let i = 0; i < result.length; i++) {
-                           
-                            option +=   result[i].under_type_act_name
-                            
+                $dropdown.append($("<option />").val('').text('Select Type'));
+                $.each(result, function() {
+                    $dropdown.append($("<option />").val(this.under_type_act_id).text(this.under_type_act_name));
+                });
 
-                            
-                        }
-
-                        $("#select_under_type").html(option);
-                }
-                // $.each(result, function() {
-                //     $dropdown.append($("<option />").val(this.nder_type_act_id).text(this.under_type_act_name));
-                // });
+            }
+      
+               
             }
         })
         
-
-    
-    
-    
         
     }
 
+
+    if(text == '<?php echo $training_text ?>') {
+       
+        $('#under_type_activity_select').removeAttr('hidden').fadeIn("slow");
+        $('.for_training').removeAttr('hidden').fadeIn("slow");
+        $('.for_project_monitoring').attr('hidden','hidden');
+    }else if(text == '<?php echo  $rgpm_text ?>' ){
+       
+        $('#under_type_activity_select').attr('hidden','hidden');
+        $('.for_training').attr('hidden','hidden');
+        $('.for_project_monitoring').removeAttr('hidden').fadeIn("slow");
+    }else {
+      
+        $('#under_type_activity_select').attr('hidden','hidden');
+        $('.for_training').attr('hidden','hidden');
+        $('.for_project_monitoring').attr('hidden','hidden');
+
+    }
+
+});
+
+
+$('#select_under_activity_form').on('submit', function(e) {
+    e.preventDefault();
+   
+    $('input[name=select_under_type_id]').val($('#select_under_type').find('option:selected').val());
+    $('#select_under_activity_modal').modal('hide')
+    
 })
+
+$(document).on('click', 'button.close-under-type', function () {
+
+
+    var text = $('#type_of_activity_select').find('option:selected').text();
+    var select_type = $('#select_under_type').find('option:selected').val();
+
+   
+
+    if(!select_type){
+        alert('Please Select Type of' + text);
+        
+    }else {
+        $('#select_under_activity_modal').modal('hide');
+        $("#select_under_type option").remove();
+    }
+
+    // 
+});
+
+
+$('#add_transaction_form').on('submit', function(e) {
+    e.preventDefault();
+    if ( $('input[name=pmas_number]') == '' ) {
+
+        alert('something');
+
+    }else {
+
+      
+
+        $.ajax({
+            type: "POST",
+            url: base_url + 'api/add-transaction',
+            data: $(this).serialize(),
+            dataType: 'json',
+            beforeSend: function() {
+               $('.btn-add-transaction').html('<div class="loader"></div>');
+                $('.btn-add-transaction').prop("disabled", true);
+            },
+            success: function(data)
+            {            
+                if (data.response) {
+                    $('#add_transaction_form')[0].reset();
+                    $('.btn-add-transaction').prop("disabled", false);
+                    $('.btn-add-transaction').text('Submit');
+                        Toastify({
+                                  text: data.message,
+                                  className: "info",
+                                  style: {
+                                    "background" : "linear-gradient(to right, #00b09b, #96c93d)",
+                                    "height" : "60px",
+                                    "width" : "350px",
+                                    "font-size" : "20px"
+                                  }
+                                }).showToast();
+
+                      
+
+                      $('a.form-wizard-previous-btn').click();
+                     
+                           
+             
+                }else {
+                    $('.btn-add-transaction').prop("disabled", false);
+                    $('.btn-add-transaction').text('Submit');
+                      Toastify({
+                                  text: data.message,
+                                  className: "info",
+                                  style: {
+                                    "background" : "linear-gradient(to right, #00b09b, #96c93d)",
+                                    "height" : "60px",
+                                    "width" : "350px",
+                                    "font-size" : "20px"
+                                  }
+                                }).showToast();
+
+                       $('a.form-wizard-previous-btn').click();
+                   
+                }
+                $('#new_transactions_table').DataTable().destroy();
+                list_all_transactions();
+                get_last_pmas_number();
+           },
+            error: function(xhr) { // if error occured
+                alert("Error occured.please try again");
+                 $('.btn-add-transaction').prop("disabled", false);
+                 $('.btn-add-transaction').text('Submit');
+            },
+
+            })
+
+    }
+
+
+    
+});
+
+function list_all_transactions(){
+
+
+    $.ajax({
+            url: base_url + 'api/get-all-transactions',
+            type: "POST",
+            dataType: "json",
+            success: function(data) {
+
+                console.log(data);
+
+                $('#new_transactions_table').DataTable({
+
+                     scrollY: 500,
+                    scrollX: true,
+                    "ordering": false,
+                    pageLength: 20,
+                    "data": data,
+                    'columns': [
+                     {
+                // data: "song_title",
+                data: null,
+                render: function (data, type, row) {
+                    return '<b><a href="javascript:;"   data-id="'+data['res_center_id']+'"  style="color: #000;"  >'+data['pmas_no']+'</a></b>';
+                }
+
+            },
+             {
+                // data: "song_title",
+                data: null,
+                render: function (data, type, row) {
+                    return '<a href="javascript:;"   data-id="'+data['res_center_id']+'"  style="color: #000;"  >'+data['date_and_time_filed']+'</a>';
+                }
+
+            },
+             {
+                // data: "song_title",
+                data: null,
+                render: function (data, type, row) {
+                    return '<a href="javascript:;"   data-id="'+data['res_center_id']+'"  style="color: #000;"  >'+data['name']+'</a>';
+                }
+
+            },
+
+
+                    ]
+
+                })
+
+            }
+
+
+        })
+
+
+}
+
+list_all_transactions();
+
+ $(document).on('click','a#reload_all_transactions',function (e) {
+
+                $('#new_transactions_table').DataTable().destroy();
+                get_last_pmas_number()
+                list_all_transactions();
+            
+        });
 
 
       </script>

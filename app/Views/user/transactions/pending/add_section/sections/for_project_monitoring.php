@@ -81,7 +81,7 @@
 	</div>
 	<div class="form-group">
 		<div class="col-12">Inventories(Store)</div>
-		<input type="text" class="form-control input" name="inventories" placeholder="">
+		<input type="number" class="form-control input" name="inventories" placeholder="">
 		<div class="wizard-form-error"></div>
 	</div>
 </div>

@@ -3,7 +3,7 @@
       <div class="modal-content">
          <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">Select Type</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close close-under-type"  aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
          </div>
@@ -11,8 +11,8 @@
             <div class="row">
             <div class="col-md-12">
                   <div class="card">
-                     <form id="add_under_activity_form">
-                        <input  type="hidden" class="form-control" id="act_id" name="act_id"  placeholder="" required>
+                     <form id="select_under_activity_form">
+                       
                         <div class="form-group">
                            <div class="col-12">Type<span class="text-danger">*</span></div>
                            <select class="custom-select " id="select_under_type"  name="select_under_type" required>  
