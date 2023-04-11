@@ -61,7 +61,7 @@
         $('input[id=act_id]').val($(this).data('id'));
         $('.type_of_training_title').text($(this).data('name'));
         $('.under_type_label').text($(this).data('name'));
-        // load_under_type($(this).data('id'));
+        load_under_type_of_activity($(this).data('id'));
      });
 
 
@@ -168,6 +168,75 @@
 
 
     });
+
+
+
+    function load_under_type_of_activity(id){
+          
+         
+        var table = $('#under_type_activity_table')
+        table.find('tbody').html('')
+        var tr1 = $('<tr>')
+        tr1.html('<th class="py-1 px-2 text-center">Please Wait</th>')
+        table.find('tbody').append(tr1)
+         setTimeout(() => {
+
+            $.ajax({
+            // JSON FILE URL
+            url: base_url + 'api/get_under_type_of_activity',
+            data : {id : id},
+            type : 'POST',
+            // Type of Return Data
+            dataType: 'json',
+            // Error Function
+            error: err => {
+                console.log(err)
+                alert("An error occured")
+               
+              
+            },
+            // Succes Function
+            success: function(resp) {
+                tr1.html('')
+                    table.find('tbody').append(tr1)
+                if (resp.length > 0) {
+                    // If returned json data is not empty
+                    var i = 1;
+                    // looping the returned data
+                    Object.keys(resp).map(k => {
+                        // creating new table row element
+                        var tr = $('<tr>')
+                         
+                            // second column data
+                        tr.append('<td class="py-1 px-2">' + resp[k].under_type_act_name + '</td>')
+                            // third column data
+                        tr.append('<td class="py-1 px-2"><ul class="d-flex justify-content-center">\
+                                <li class="mr-3 "><a href="javascript:;" class="text-secondary action-icon" data-idd= "'+resp[k].typ_ac_id+'"  data-id="'+resp[k].under_type_act_id+'" data-name="'+resp[k].under_type_act_name+'"  id="update-under-type-activity"><i class="fa fa-edit"></i></a></li>\
+                                 <li><a href="javascript:;" data-id="'+resp[k].under_type_act_id+'" data-idd= "'+resp[k].typ_ac_id+'"  id="delete-under-activity"  class="text-danger action-icon"><i class="ti-trash"></i></a></li>\
+                                </ul></td>')
+                         
+
+                        // Append table row item to table body
+                        table.find('tbody').append(tr)
+                    })
+                } else {
+                    // If returned json data is empty
+                    var tr = $('<tr>')
+                    tr.append('<th class="py-1 px-2 text-center">No data to display</th>')
+                    table.find('tbody').append(tr)
+                }
+              
+            }
+        })
+                
+ 
+             }, 500)
+         
+     }
+
+
+
+ 
 </script>  
 </body>
 </html>

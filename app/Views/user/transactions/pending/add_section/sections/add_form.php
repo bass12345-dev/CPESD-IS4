@@ -22,7 +22,8 @@
 				<div class="form-group">
 					<div class="col-12">Responsible Section</div>
 					<div class="form-group">
-						<select class="custom-select input wizard-required" name="type_of_monitoring_id"> 
+						<select class="custom-select input wizard-required" name="type_of_monitoring_id">
+						<option value="">Select Responsible Section</option> 
 						<?php 
 
 								foreach ($responsible as $row) : ?>
@@ -37,7 +38,8 @@
 				<div class="form-group">
 					<div class="col-12">Type of Activity</div>
 					<div class="form-group">
-						<select class="custom-select input wizard-required" id="myselect" name="type_of_activity_id"> 
+						<select class="custom-select input wizard-required" id="type_of_activity_select"  name="type_of_activity_id" required> 
+						<option value="">Select Type Of Activity</option> 
 						<?php 
 
 								foreach ($activities as $row) :
@@ -55,19 +57,12 @@
 					</div>
 					<div class="wizard-form-error"></div>
 				</div>
-				<div class="form-group" id="under_type_activity_select" hidden>
-					<div class="col-12">Type </div>
-					<div class="form-group">
-						<select class="custom-select input wizard-required" name="under_type_of_activity_id"> 
-
-                        </select>
-					</div>
-					<div class="wizard-form-error"></div>
-				</div>
+				
 				<div class="form-group">
 					<div class="col-12">Responsibility Center</div>
 					<div class="form-group">
-						<select class="custom-select input responsibility wizard-required" name="responsibility_center_id" style="width: 100%;">
+						<select class="custom-select input responsibility wizard-required" name="responsibility_center_id" style="width: 100%;" required>
+						<option value="">Select Responsibility Center</option> 
 						<?php 
 
 							foreach ($responsibility_centers as $row) :
@@ -83,8 +78,19 @@
 				</div>
 				<div class="form-group">
 					<div class="col-12">Name of CSO</div>
+					<option value="">Select CSO</option> 
 					<div class="form-group">
-						<select class="custom-select input cso wizard-required" name="cso_id" style="width: 100%;"> </select>
+						<select class="custom-select input cso wizard-required" name="cso_id" style="width: 100%;" required> 
+						<?php 
+
+							foreach ($cso as $row) :
+							?>
+							<option value="<?php echo $row->cso_id ?>"><?php echo $row->cso_code.' - '.$row->cso_name ?></option>
+							<?php 
+
+							endforeach;
+							?>       
+						</select>
 					</div>
 					<div class="wizard-form-error"></div>
 				</div>

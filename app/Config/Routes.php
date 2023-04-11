@@ -112,7 +112,7 @@ $routes->post('api/get-activities', 'api\TypeOfActivity::get_activities');
 
 //Under Type of Activity 
 $routes->post('api/add-under-type-of-activity', 'api\TypeOfActivity::add_under_type_of_activity');
-
+$routes->post('api/get_under_type_of_activity', 'api\TypeOfActivity::get_under_type_of_activity');
 
 //User Apin:
 $routes->post('api/get-last-pmas-number', 'api\PendingTransactions::get_last_pmas_number');

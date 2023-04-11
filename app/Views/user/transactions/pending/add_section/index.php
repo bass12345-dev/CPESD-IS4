@@ -19,7 +19,7 @@
                </section>
             </div>
          </div>
-   
+      <?php echo view('user/transactions/pending/add_section/modals/select_under_type_of_activity_modal') ?> 
       <?php echo view('includes/scripts.php') ?> 
       <script>
 jQuery(document).ready(function() {
@@ -134,6 +134,33 @@ jQuery(document).ready(function() {
 });
 
 
+
+$('#id_0').datetimepicker({
+            "allowInputToggle": true,
+            "showClose": true,
+            "showClear": true,
+            "showTodayButton": true,
+            "format": "YYYY/MM/DD hh:mm:ss A",
+        });
+
+
+         $('#id_1').datetimepicker({
+            "allowInputToggle": true,
+            "showClose": true,
+            "showClear": true,
+            "showTodayButton": true,
+            "format": "YYYY/MM/DD hh:mm:ss A",
+        });
+
+          $('#id_2').datetimepicker({
+            "allowInputToggle": true,
+            "showClose": true,
+            "showClear": true,
+            "showTodayButton": true,
+            "format": "YYYY/MM/DD hh:mm:ss A",
+        });
+
+
 function get_last_pmas_number(){
 
       $.ajax({
@@ -146,6 +173,60 @@ function get_last_pmas_number(){
          });
 }
 get_last_pmas_number();
+
+
+$(document).on('change','select#type_of_activity_select',function (e) {
+    var id = $('#type_of_activity_select').find('option:selected').val();
+
+    if(!id){
+       alert('Please Select Type Of Activity');
+    }else {
+       
+
+        $.ajax({
+            // JSON FILE URL
+            url: base_url + 'api/get_under_type_of_activity',
+            data : {id : id},
+            type : 'POST',
+            // Type of Return Data
+            dataType: 'json',
+            // Error Function
+            error: err => {
+                console.log(err)
+                alert("An error occured")
+               
+              
+            },
+            // Succes Function
+            success: function(result) {
+                $('#select_under_activity_modal').modal('show');
+                var $dropdown = $("#select_under_type");
+                var option = '';
+                if(result.length){
+                        for (let i = 0; i < result.length; i++) {
+                           
+                            option +=   result[i].under_type_act_name
+                            
+
+                            
+                        }
+
+                        $("#select_under_type").html(option);
+                }
+                // $.each(result, function() {
+                //     $dropdown.append($("<option />").val(this.nder_type_act_id).text(this.under_type_act_name));
+                // });
+            }
+        })
+        
+
+    
+    
+    
+        
+    }
+
+})
 
 
       </script>

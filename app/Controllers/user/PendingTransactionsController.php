@@ -12,6 +12,7 @@ class PendingTransactionsController extends BaseController
     public $responsible_section_table = 'responsible_section';
     public $responsibility_center_table = 'responsibility_center';
     public $activity_table = 'type_of_activities';
+    public $cso_table = 'cso';
     public $order_by_desc = 'desc';
     public $order_by_asc = 'asc';
     protected $request;
@@ -36,10 +37,11 @@ class PendingTransactionsController extends BaseController
     
     public function add_transaction(){
         if (session()->get('user_type') == 'user') {
-            $data['title'] = 'Pending Transactions';
-            $data['activities'] = $this->CustomModel->get_all_order_by($this->activity_table,'type_act_created',$this->order_by_desc);
-            $data['responsible'] = $this->CustomModel->get_all_order_by($this->responsible_section_table,'responsible_section_created',$this->order_by_desc);
-            $data['responsibility_centers'] = $this->CustomModel->get_all_order_by($this->responsibility_center_table,'responsibility_created',$this->order_by_desc);
+            $data['title'] = 'Add Transactions';
+            $data['activities'] = $this->CustomModel->get_all_order_by($this->activity_table,'type_of_activity_name',$this->order_by_desc);
+            $data['responsible'] = $this->CustomModel->get_all_order_by($this->responsible_section_table,'responsible_section_name',$this->order_by_desc);
+            $data['responsibility_centers'] = $this->CustomModel->get_all_order_by($this->responsibility_center_table,'responsibility_center_name',$this->order_by_desc);
+            $data['cso'] = $this->CustomModel->getwhere_orderby($this->cso_table,array('cso_status'=> 'active'),'cso_name',$this->order_by_asc);
             return view('user/transactions/pending/add_section/index',$data);
             }else {
                return redirect()->back();

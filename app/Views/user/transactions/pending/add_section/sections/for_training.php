@@ -1,4 +1,4 @@
-<div class="for_training" >
+<div class="for_training" hidden >
 	<h5>For Training</h5>
 	<div class="form-group">
 		<div class="col-12">Title of Training</div>

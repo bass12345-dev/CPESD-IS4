@@ -1,16 +1,5 @@
-<div class=" for_project_monitoring" >
+<div class=" for_project_monitoring" hidden>
 	<h3>For Project Monitoring</h3>
-	<!-- <div class="form-group">
-                                Payment Type
-                                <div class="wizard-form-radio">
-                                    <input name="radio-name" id="mastercard" type="radio">
-                                    <label for="mastercard">Master Card</label>
-                                </div>
-                                <div class="wizard-form-radio">
-                                    <input name="radio-name" id="visacard" type="radio">
-                                    <label for="visacard">Visa Card</label>
-                                </div>
-                            </div> -->
 	<div class="form-group">
 		<div class="col-12">Project Title</div>
 		<input type="text" class="form-control input" name="project_title" placeholder="">

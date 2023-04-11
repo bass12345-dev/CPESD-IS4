@@ -10,6 +10,7 @@ class TypeOfActivity extends BaseController
     public    $activities_table = 'type_of_activities';
     public    $under_activity_table = 'under_type_of_activity';
     public $order_by_desc = 'desc';
+    public $order_by_asc = 'asc';
     protected $request;
     protected $CustomModel;
 
@@ -100,5 +101,38 @@ class TypeOfActivity extends BaseController
 
              echo json_encode($data);
         }
+    }
+
+
+
+
+    public function get_under_type_of_activity(){
+
+        if ($this->request->isAJAX()) {
+            $data = [];
+            $count = $this->CustomModel->countwhere($this->under_activity_table,array('typ_ac_id' => $this->request->getPost('id')));
+
+            if($count > 0){
+
+            
+
+                $items = $this->CustomModel->getwhere_orderby($this->under_activity_table,array('typ_ac_id' => $this->request->getPost('id')),'under_type_act_name',$this->order_by_asc);
+                foreach ($items as $row) {
+            
+                    $data[] = array(
+    
+                            'under_type_act_name' => $row->under_type_act_name,
+                            'typ_ac_id' => $row->typ_ac_id,
+                            'under_type_act_id' => $row->under_type_act_id 
+                    );
+            }
+    
+           
+        }else {
+            $data = [];
+        }
+         echo json_encode($data);
+        }
+
     }
 }
