@@ -128,6 +128,7 @@ class Cso extends BaseController
                 'telephone_number' => $row->telephone_number,    
                 'email_address' => $row->email_address,
                 'type_of_cso' => strtoupper($row->type_of_cso),
+                'cso_status' => $row->cso_status
 
 
             );
@@ -144,14 +145,16 @@ class Cso extends BaseController
         foreach ($item as $row) {
 
             $data[] = array(
-
+                'cso_id' => $row->cso_id,
                 'cso_name' => $row->cso_name,
+                'cso_code' => $row->cso_code,
                 'address' => $row->purok_number.' '.$row->barangay,
                 'contact_person' => $row->contact_person,
                 'contact_number' => $row->contact_number,
                 'telephone_number' => $row->telephone_number,    
                 'email_address' => $row->email_address,
-                'type_of_cso' => $row->type_of_cso
+                'type_of_cso' => $row->type_of_cso,
+                'cso_status' => $row->cso_status
 
             );
         } 
@@ -161,6 +164,64 @@ class Cso extends BaseController
 
 
 
+public function get_cso_information(){
+
+
+ 
+
+	$row = $this->CustomModel->getwhere($this->cso_table,array('cso_id' =>  $this->request->getPost('id')))[0];
+	$data = array(
+        'cso_id' => $row->cso_id,
+        'cso_name' => $row->cso_name,
+        'cso_code' => $row->cso_code,
+        'address' => 'Purok '.$row->purok_number.' '.$row->barangay,
+        'contact_person' => $row->contact_person,
+        'contact_number' => $row->contact_number,
+        'telephone_number' => $row->telephone_number,    
+        'email_address' => $row->email_address,
+        'type_of_cso' => strtoupper($row->type_of_cso),
+        'cso_status' => $row->cso_status == 'active' ?  '<span class="status-p bg-success">'.ucfirst($row->cso_status).'</span>' : '<span class="status-p bg-success">'.ucfirst($row->cso_status).'</span>',
+           
+
+    );
+
+    echo json_encode($data);
+
+
+}
+
+
+public function update_cso_status(){
+
+    $data = array(
+        'cso_status' => $this->request->getPost('cso_status')
+    );
+
+    $where = array(
+        'cso_id' => $this->request->getPost('cso_id')
+    );
+
+    $update = $this->CustomModel->updatewhere($where,$data,$this->cso_table);
+
+    if($update){
+
+        $resp = array(
+            'message' => 'Successfully Updated',
+            'response' => true
+        );
+
+    }else {
+
+        $resp = array(
+            'message' => 'Error',
+            'response' => false
+        );
+
+    }
+
+    echo json_encode($resp);
+
+}
 
 
 //CSO Officers

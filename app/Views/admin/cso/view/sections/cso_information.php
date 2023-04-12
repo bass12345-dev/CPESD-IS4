@@ -2,7 +2,12 @@
 	<div class="col-md-6">
 		<table class="tablesaw table-bordered table-hover table" data-tablesaw-mode="swipe" data-tablesaw-sortable data-tablesaw-sortable-switch data-tablesaw-minimap data-tablesaw-mode-switch id="_table">
 			<tr>
-				<td colspan="2"> <a href="javascript:;" class="mt-2  mb-2 btn sub-button text-center  btn-rounded btn-md btn-block"><i class = "fa fa-user" aria-hidden = "true"></i> CSO Information</a> <a href="javascript:;" id="update-cso" class="mt-2  mb-2  text-center  btn-rounded btn-md btn-block"><i class = "fa fa-edit" aria-hidden = "true"></i> Update CSO Information</a> </td>
+				<td colspan="2"> <a href="javascript:;" class="mt-2  mb-2 btn sub-button text-center  btn-rounded btn-md btn-block"><i class = "fa fa-user" aria-hidden = "true"></i> CSO Information</a> 
+				<a href="javascript:;" id="update-cso-information" class="mt-2  mb-2  text-center  btn-rounded btn-md btn-block"><i class = "fa fa-edit" aria-hidden = "true"></i> Update CSO Information</a> </td>
+			</tr>
+			<tr>
+				<td>CSO</td>
+				<td class="cso_code"></td>
 			</tr>
 			<tr>
 				<td>CSO</td>
@@ -21,10 +26,22 @@
 				<td class="contact_number"></td>
 			</tr>
 			<tr>
-				<td>Email</td>
+				<td>Telephone Number</td>
+				<td class="telephone_number"></td>
+			</tr>
+			<tr>
+				<td>Email Address</td>
 				<td class="email"></td>
 			</tr>
 			<tr>
+				<td>CSO Classification</td>
+				<td class="classification"></td>
+			</tr>
+			<tr>
+				<td>CSO Status</td>
+				<td class="cso_status"></td>
+			</tr>
+			<!-- <tr>
 				<td>COR</td>
 				<td><a href="javascript:;" class="view-pdf" id="view_cor" data-type="cor">View COR</a> <a href="javascript:;" class="btn btn-rounded btn-secondary pull-right" id="update_cor">Update COR</a></td>
 			</tr>
@@ -35,7 +52,7 @@
 			<tr>
 				<td>Article</td>
 				<td><a href="javascript:; " class="view-pdf" id="view_article" data-type="articles">View Article</a> <a href="javascript:;" class="btn btn-rounded btn-secondary pull-right" id="update_article">Update Article</a></td>
-			</tr>
+			</tr> -->
 		</table>
 	</div>
 	<div class="col-md-6 tree-content">

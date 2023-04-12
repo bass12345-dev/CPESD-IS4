@@ -93,10 +93,15 @@ $routes->post('api/update-user-status', 'api\Users::update_user_status');
 //CSO
 $routes->post('api/add-cso', 'api\Cso::add_cso');
 $routes->post('api/get-cso', 'api\Cso::get_cso');
+$routes->post('api/get-cso-infomation', 'api\Cso::get_cso_information');
+
+
 
 //CSO Officers
 $routes->post('api/add-officer', 'api\Cso::add_cso_officer');
 $routes->post('api/get-officers', 'api\Cso::get_officers');
+$routes->post('api/update-cso-status', 'api\Cso::update_cso_status');
+
 
 //Responsibility Center
 $routes->post('api/add-responsibility', 'api\Responsibility::add_responsibiliy');

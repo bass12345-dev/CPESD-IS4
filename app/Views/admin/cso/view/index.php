@@ -81,10 +81,22 @@
             </div>
          </div>
       </div>
+      <?php echo view('admin/cso/view/modals/update_cso_information'); ?> 
       <?php echo view('admin/cso/view_officers/modals/add_officer_modal'); ?>   
       <?php echo view('includes/scripts.php') ?> 
       <script src="https://balkan.app/js/OrgChart.js"></script>
       <script>
+
+
+
+
+$(document).on('click','a#update-cso-information',function (e) {
+
+const id = $(this).data('id');
+$('#update_cso_information_modal').modal('show');
+$('input[name=cso_idd]').val(id);
+});
+
 
 
 
@@ -295,6 +307,60 @@ function load_organization_chart(){
 // ]);
 }
 
+function get_cso_information(){
+
+          $.ajax({
+                            type: "POST",
+                            url: base_url + 'api/get-cso-infomation',
+                            data : {'id' : '<?php echo $_GET['id'] ?>'},
+                            cache: false,
+                            dataType: 'json',  
+                            success: function(data){
+                               $('.cso_code').text(data.cso_code)
+                                $('.cso_name').text(data.cso_name)
+                                $('.cso_address').text(data.address)
+                                $('.contact_person').text(data.contact_person)
+                                $('.contact_number').text(data.contact_number)
+                                $('.telephone_number').text(data.telephone_number)
+                                $('.email').text(data.email)
+                                $('.classification').html('<span class="status-p sub-button">'+data.type_of_cso+'<span>')
+                                $('.cso_status').html(data.cso_status)
+                                $('#update-cso-information').data('id',data.cso_id);
+                              //   $('#update-cso').data('name',data.data.cso_name);
+                              //   $('#update-cso').data('address',data.data.address);
+                              //   $('#update-cso').data('contact-person',data.data.contact_person);
+                              //   $('#update-cso').data('contact-number',data.data.contact_number);
+                              //   $('#update-cso').data('email',data.data.email);
+
+
+                              //   $('#view_cor').data('id',data.data.cor);
+                              //   $('#view_bylaws').data('id',data.data.by_laws);
+                              //   $('#view_article').data('id',data.data.article);
+
+
+                              //   $('#update_cor').data('id',data.data.cso_id);
+                              //   $('#update_cor').data('cor_name',data.data.cor);
+
+                              //   $('#update_bylaws').data('id',data.data.cso_id);
+                              //   $('#update_bylaws').data('bylaws_name',data.data.by_laws);
+                               
+                              //   $('#update_article').data('id',data.data.cso_id);
+                              //   $('#update_article').data('article_name',data.data.article);
+
+
+
+
+
+
+                                       
+                            }
+
+                    })
+
+                }
+
+
+get_cso_information();
 load_organization_chart();
 
 

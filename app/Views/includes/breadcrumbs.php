@@ -11,7 +11,7 @@
         </div>
         <div class="col-sm-6 clearfix">
             <div class=" pull-right">
-                <a href="" style="color: #000; font-size: 20px;">Sample</a>                          
+                <a href="" style="color: #000; font-size: 20px;"><?php echo session()->get('username') ?></a>                          
             </div>
         </div>
     </div>

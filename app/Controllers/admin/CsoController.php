@@ -20,6 +20,8 @@ class CsoController extends BaseController
                             'Auditor',
                             'Manager'
                             ];
+    public $type_of_cso_array = ['PO', 'Coop','NSC'];
+    public $barangay_array = ['Tuyabang Bajo','Tuyabang Alto','Tuyabang Proper'];
 
     public function __construct()
     {
@@ -33,8 +35,8 @@ class CsoController extends BaseController
 
         if (session()->get('user_type') == 'admin') {
             $data['title'] = 'CSO';
-            $data['type_of_cso'] = ['PO', 'Coop','NSC'];
-            $data['barangay'] = ['Tuyabang Bajo','Tuyabang Alto','Tuyabang Proper'];
+            $data['type_of_cso'] = $this->type_of_cso_array;
+            $data['barangay'] = $this->barangay_array;
             
             return view('admin/cso/index',$data);
         }else {
@@ -50,19 +52,6 @@ class CsoController extends BaseController
            $verify =  $this->CustomModel->countwhere($this->cso_table,array('cso_id' => $_GET['id']));
        
            if($verify) {
-            
-            // $array = array(
-            //         [
-            //             'position' => 'Pres',
-            //             'number' => 1
-            //         ],
-            //         [
-            //             'position' => 'Vice Pres',
-            //             'number' => 2
-            //         ]
-
-            // );
-            // echo json_encode($array);
             $i = 1;
             $a = [];
             foreach ($this->position_array as $row) {
@@ -78,7 +67,10 @@ class CsoController extends BaseController
                $data['title'] = $this->CustomModel->getwhere($this->cso_table,array('cso_id' => $_GET['id']))[0]->cso_name;
                $data['cso_type'] = strtoupper($this->CustomModel->getwhere($this->cso_table,array('cso_id' => $_GET['id']))[0]->type_of_cso);
             //    $data['positions'] = $this->position_array; 
+                $data['type_of_cso'] = $this->type_of_cso_array;
+                $data['barangay'] = $this->barangay_array;
                 $data['positions'] = $a; 
+
                return view('admin/cso/view/index',$data);
            }else {
                return redirect()->back();

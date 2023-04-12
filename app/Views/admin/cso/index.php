@@ -20,7 +20,8 @@
                 </div>
         </div>
     </div> 
-<?php echo view('admin/cso/modals/add_cso_modal'); ?>     
+<?php echo view('admin/cso/modals/add_cso_modal'); ?>  
+<?php echo view('admin/cso/modals/update_cso_status_modal'); ?>     
 <?php echo view('includes/scripts.php') ?> 
 <script type="text/javascript">
 
@@ -163,7 +164,7 @@
                                               <div class="dropdown-menu">\
                                                 <a class="dropdown-item" href="javascript:;" data-id="'+data['cso_id']+'"  id="view-cso" > <i class="ti-eye"></i> View Information</a>\
                                                 <hr>\
-                                                <a class="dropdown-item text-danger" href="javascript:;" data-id="'+data['cso_id']+'" id="delete-cso"  id="view_transaction_pending" > <i class="ti-trash"></i> Delete</a>\
+                                                <a class="dropdown-item " href="javascript:;" data-id="'+data['cso_id']+'" data-status="'+data['cso_status']+'"    id="update-cso-status" ><i class="ti-pencil"></i> Update CSO Status</a>\
                                               </di>';
                                         }
 
@@ -193,6 +194,18 @@
     get_cso();
 
 
+    $(document).on('click','a#update-cso-status',function (e) {
+
+        const id = $(this).data('id');
+        const status = $(this).data('status');
+        $('#update_cso_status_modal').modal('show');
+        $('#cso_status option[value='+status+']').attr('selected','selected'); 
+        $('input[name=cso_id]').val(id);
+    });
+
+
+    
+
     $(document).on('click','a#view-cso',function (e) {
 
         window.open( base_url + 'admin/cso/cso-information?id=' + $(this).data('id'),'_blank');
@@ -204,7 +217,77 @@
 
             window.open( base_url + 'admin/cso/view-officers?id=' + $(this).data('id'),'_blank');
 
-      })
+      });
+
+
+
+    
+      $('#update_cso_status_form').on('submit', function(e) {
+        e.preventDefault();
+
+         $.ajax({
+            type: "POST",
+            url: base_url + 'api/update-cso-status',
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData:false,
+            dataType: 'json',
+            beforeSend: function() {
+                $('.btn-update-cso-status').text('Please wait...');
+                $('.btn-update-cso-status').attr('disabled','disabled');
+            },
+             success: function(data)
+            {            
+                if (data.response) {
+                    $('#update_cso_status_modal').modal('hide')
+                    $('.btn-update-cso-status').text('Save Changes');
+                    $('.btn-update-cso-status').removeAttr('disabled');
+                    
+                   Toastify({
+                                text: data.message,
+                                className: "info",
+                                style: {
+                                    "background" : "linear-gradient(to right, #00b09b, #96c93d)",
+                                    "height" : "60px",
+                                    "width" : "350px",
+                                    "font-size" : "20px"
+                                }
+                            }).showToast();
+                    $('#cso_table').DataTable().destroy();
+                    get_cso();
+
+                }else {
+                    
+                     $('.btn-update-cso-status').text('Save Changes');
+                    $('.btn-update-cso-status').removeAttr('disabled');
+                      
+                   Toastify({
+                                text: data.message,
+                                className: "info",
+                                style: {
+                                    "background" : "linear-gradient(to right, #00b09b, #96c93d)",
+                                    "height" : "60px",
+                                    "width" : "350px",
+                                    "font-size" : "20px"
+                                }
+                            }).showToast();
+                   
+                }
+           },
+            error: function(xhr) { // if error occured
+                alert("Error occured.please try again");
+                $('.btn-update-cso-status').text('Save Changes');
+                $('.btn-update-cso-status').removeAttr('disabled');
+            },
+
+
+        });
+
+    });
+    
+
+      
 
 
     $('#add_cso_form').on('submit', function(e) {

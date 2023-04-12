@@ -51,6 +51,7 @@ class Auth extends BaseController
                                 'user_id' => $user->user_id,
                                 'user_type' => $user->user_type,
                                 'user_status' => $user->user_status,
+                                'username' => $user->username,
                                 'isLoggedin' => True
                             );
 
