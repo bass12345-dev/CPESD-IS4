@@ -174,6 +174,8 @@ public function get_cso_information(){
         'cso_id' => $row->cso_id,
         'cso_name' => $row->cso_name,
         'cso_code' => $row->cso_code,
+        'purok_number' => $row->purok_number,
+        'barangay' => $row->barangay,
         'address' => 'Purok '.$row->purok_number.' '.$row->barangay,
         'contact_person' => $row->contact_person,
         'contact_number' => $row->contact_number,
@@ -187,6 +189,51 @@ public function get_cso_information(){
 
     echo json_encode($data);
 
+
+}
+
+
+public function update_cso_information(){
+
+    
+    $data = array(
+        'cso_name' => $this->request->getPost('cso_name'),
+        'cso_code' => $this->request->getPost('cso_code'),
+        'type_of_cso' => $this->request->getPost('cso_type'),
+        'purok_number' => $this->request->getPost('purok') ,
+        'barangay' => $this->request->getPost('barangay'),
+        'contact_person' => ($this->request->getPost('contact_person') == '') ?  '' : $this->request->getPost('contact_person') ,
+        'contact_number' => $this->request->getPost('contact_number'),
+        'telephone_number' => ($this->request->getPost('telephone_number') == '') ?  '' : $this->request->getPost('telephone_number'),
+        'email_address' => ($this->request->getPost('email_address') == '') ?  '' : $this->request->getPost('email_address'),
+        'cso_created' => date('Y-m-d H:i:s', time())
+      
+    );
+    
+    $where = array(
+        'cso_id' => $this->request->getPost('cso_idd')
+    );
+
+    $update = $this->CustomModel->updatewhere($where,$data,$this->cso_table);
+
+    if($update){
+
+        $resp = array(
+            'message' => 'Successfully Updated',
+            'response' => true
+        );
+
+    }else {
+
+        $resp = array(
+            'message' => 'Error',
+            'response' => false
+        );
+
+    }
+
+    echo json_encode($resp);
+    
 
 }
 

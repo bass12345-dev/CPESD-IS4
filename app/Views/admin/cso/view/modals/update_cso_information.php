@@ -2,16 +2,17 @@
    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Update CSO Status</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Update CSO</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
          </div>
-         <input type="hidden" name="cso_idd">
-         <form id="update_cso_status_form" class="p-2">
+        
+         <form id="update_cso_information_form" class="p-2">
             <div class="modal-body">
               
             <div class="form-group">
+            <input type="hidden" name="cso_idd">
                   <div class="col-12">CSO Name<span class="text-danger">*</span></div>
                   <input type="text" class="form-control input" name="cso_name"  placeholder="" required>
                </div>
@@ -21,7 +22,7 @@
                </div>
                <div class="form-group ">
                   <label for="input_barangay">CSO Type<span class="text-danger">*</span></label>
-                  <select  class=" custom-select" id="input_barangay" name="cso_type"   style="border: 1px solid;" required>
+                  <select  class=" custom-select" id="cso_type" name="cso_type"   style="border: 1px solid;" required>
                      <option  value="" selected>Select type</option>
                      <?php foreach ($type_of_cso as $row) { ?>
                      <option  value="<?php echo strtolower($row); ?>"><?php echo $row; ?></option>
@@ -43,10 +44,10 @@
                         <div class="input-group-prepend">
                            <span class="input-group-text" for="input_barangay"  >Barangay</span>
                         </div>
-                         <select class="custom-select" id="input_barangay" name="barangay" style="border: 1px solid;height: 45px;" required>
+                         <select class="custom-select" id="barangay" name="barangay" style="border: 1px solid;height: 45px;" required>
                            <option  value="" selected>Select Barangay</option>
                              <?php foreach ($barangay as $row) { ?>
-                              <option  value="<?php echo $row ?>"><?php echo $row; ?></option>
+                              <option  value="<?php echo preg_replace('/\s+/', '', $row); ?>"><?php echo $row; ?></option>
                               <?php } ?>
                         </select>
                      </div>

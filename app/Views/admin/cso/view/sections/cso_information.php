@@ -39,7 +39,7 @@
 			</tr>
 			<tr>
 				<td>CSO Status</td>
-				<td class="cso_status"></td>
+				<td class="cso_status"> </td>
 			</tr>
 			<!-- <tr>
 				<td>COR</td>

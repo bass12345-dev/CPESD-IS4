@@ -101,7 +101,7 @@ $routes->post('api/get-cso-infomation', 'api\Cso::get_cso_information');
 $routes->post('api/add-officer', 'api\Cso::add_cso_officer');
 $routes->post('api/get-officers', 'api\Cso::get_officers');
 $routes->post('api/update-cso-status', 'api\Cso::update_cso_status');
-
+$routes->post('api/update-cso-information', 'api\Cso::update_cso_information');
 
 //Responsibility Center
 $routes->post('api/add-responsibility', 'api\Responsibility::add_responsibiliy');

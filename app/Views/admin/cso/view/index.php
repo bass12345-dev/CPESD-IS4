@@ -92,9 +92,13 @@
 
 $(document).on('click','a#update-cso-information',function (e) {
 
-const id = $(this).data('id');
+
+// const id = $(this).data('id');
 $('#update_cso_information_modal').modal('show');
-$('input[name=cso_idd]').val(id);
+// $('input[name=cso_idd]').val(id);
+
+
+
 });
 
 
@@ -307,6 +311,72 @@ function load_organization_chart(){
 // ]);
 }
 
+
+
+$('#update_cso_information_form').on('submit', function(e) {
+        e.preventDefault();
+
+         $.ajax({
+            type: "POST",
+            url: base_url + 'api/update-cso-information',
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData:false,
+            dataType: 'json',
+            beforeSend: function() {
+                $('.btn-update-cso').text('Please wait...');
+                $('.btn-update-cso').attr('disabled','disabled');
+            },
+             success: function(data)
+            {            
+                if (data.response) {
+                    $('#update_cso_information_modal').modal('hide')
+                    $('.btn-update-cso').text('Save Changes');
+                    $('.btn-update-cso').removeAttr('disabled');
+                    
+                   Toastify({
+                                text: data.message,
+                                className: "info",
+                                style: {
+                                    "background" : "linear-gradient(to right, #00b09b, #96c93d)",
+                                    "height" : "60px",
+                                    "width" : "350px",
+                                    "font-size" : "20px"
+                                }
+                            }).showToast();
+                    
+                    get_cso_information();
+
+                }else {
+                    
+                     $('.btn-update-cso').text('Save Changes');
+                    $('.btn-update-cso').removeAttr('disabled');
+                      
+                   Toastify({
+                                text: data.message,
+                                className: "info",
+                                style: {
+                                    "background" : "linear-gradient(to right, #00b09b, #96c93d)",
+                                    "height" : "60px",
+                                    "width" : "350px",
+                                    "font-size" : "20px"
+                                }
+                            }).showToast();
+                   
+                }
+           },
+            error: function(xhr) { // if error occured
+                alert("Error occured.please try again");
+                $('.btn-update-cso').text('Save Changes');
+                $('.btn-update-cso').removeAttr('disabled');
+            },
+
+
+        });
+
+    });
+
 function get_cso_information(){
 
           $.ajax({
@@ -322,31 +392,23 @@ function get_cso_information(){
                                 $('.contact_person').text(data.contact_person)
                                 $('.contact_number').text(data.contact_number)
                                 $('.telephone_number').text(data.telephone_number)
-                                $('.email').text(data.email)
+                                $('.email').text(data.email_address)
                                 $('.classification').html('<span class="status-p sub-button">'+data.type_of_cso+'<span>')
-                                $('.cso_status').html(data.cso_status)
+                                $('.cso_status').html(data.cso_status+' '+'<a href="javascript:;"  id="update-cso-status" class=" text-center ml-3  btn-rounded "><i class = "fa fa-edit" aria-hidden = "true"></i> Update Status</a>')
                                 $('#update-cso-information').data('id',data.cso_id);
-                              //   $('#update-cso').data('name',data.data.cso_name);
-                              //   $('#update-cso').data('address',data.data.address);
-                              //   $('#update-cso').data('contact-person',data.data.contact_person);
-                              //   $('#update-cso').data('contact-number',data.data.contact_number);
-                              //   $('#update-cso').data('email',data.data.email);
 
 
-                              //   $('#view_cor').data('id',data.data.cor);
-                              //   $('#view_bylaws').data('id',data.data.by_laws);
-                              //   $('#view_article').data('id',data.data.article);
 
-
-                              //   $('#update_cor').data('id',data.data.cso_id);
-                              //   $('#update_cor').data('cor_name',data.data.cor);
-
-                              //   $('#update_bylaws').data('id',data.data.cso_id);
-                              //   $('#update_bylaws').data('bylaws_name',data.data.by_laws);
-                               
-                              //   $('#update_article').data('id',data.data.cso_id);
-                              //   $('#update_article').data('article_name',data.data.article);
-
+                                $('input[name=cso_idd]').val(data.cso_id);
+                                $('input[name=cso_name]').val(data.cso_name);
+                                $('input[name=cso_code]').val(data.cso_code);
+                                $('#cso_type option[value='+data.type_of_cso.toString().toLowerCase()+']').attr('selected','selected'); 
+                                $('input[name=purok]').val(data.purok_number);
+                                $('#barangay option[value='+'TuyabangBajo'+']').attr('selected','selected'); 
+                                $('input[name=contact_person]').val(data.contact_person);
+                                $('input[name=contact_number]').val(data.contact_number);
+                                $('input[name=telephone_number]').val(data.telephone_number);
+                                $('input[name=email_address]').val(data.email_address);
 
 
 
