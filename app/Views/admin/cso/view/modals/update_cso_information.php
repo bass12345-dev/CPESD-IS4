@@ -47,7 +47,7 @@
                          <select class="custom-select" id="barangay" name="barangay" style="border: 1px solid;height: 45px;" required>
                            <option  value="" selected>Select Barangay</option>
                              <?php foreach ($barangay as $row) { ?>
-                              <option  value="<?php echo preg_replace('/\s+/', '', $row); ?>"><?php echo $row; ?></option>
+                              <option  value="<?php echo  $row; ?>"><?php echo $row; ?></option>
                               <?php } ?>
                         </select>
                      </div>

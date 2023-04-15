@@ -182,6 +182,7 @@ public function get_cso_information(){
         'telephone_number' => $row->telephone_number,    
         'email_address' => $row->email_address,
         'type_of_cso' => strtoupper($row->type_of_cso),
+        'status' => $row->cso_status,
         'cso_status' => $row->cso_status == 'active' ?  '<span class="status-p bg-success">'.ucfirst($row->cso_status).'</span>' : '<span class="status-p bg-success">'.ucfirst($row->cso_status).'</span>',
            
 
@@ -276,14 +277,8 @@ public function update_cso_status(){
 public function add_cso_officer()
 {
 if ($this->request->isAJAX()) {
-        // $pieces = explode("-",$this->request->getPost('cso_position'));
-        // $number =  $pieces[1];
-        // $pieces2 = explode("-",$this->request->getPost('cso_position'));
-        // $position =  $pieces2[0];
+       
 
-    
-   
- 
             $data = array(
                 'officer_cso_id' => $this->request->getPost('cso_id'),
                 'cso_position' => explode("-",$this->request->getPost('cso_position'))[0],
@@ -293,14 +288,14 @@ if ($this->request->isAJAX()) {
                 'last_name' => $this->request->getPost('last_name'),
                 'extension' => ($this->request->getPost('extension') == '') ?  '' : $this->request->getPost('extension') ,
                 'cso_position' => $this->request->getPost('cso_position'),
-                'contact_number' => $this->request->getPost('contact_number'),
+                'contact_number' => $this->request->getPost('officer_contact_number'),
                 'email_address' => $this->request->getPost('email'),
                 'cso_officer_created' =>  date('Y-m-d H:i:s', time()),
                 
             
             );
 
-
+       
 
         $verify = $this->CustomModel->countwhere($this->cso_officer_table,array('cso_position' => $data['cso_position'],'position_number' => $data['position_number'],'officer_cso_id' => $data['officer_cso_id']));
         
@@ -353,6 +348,10 @@ if ($this->request->isAJAX()) {
                     'id' => $id++,
                     'pid' => $pid++,
                     'name' => $row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension,
+                    'first_name' => $row->first_name,
+                    'middle_name' => $row->middle_name,
+                    'last_name' => $row->last_name,
+                    'extension' => $row->extension,
                     'title' => explode("-",$row->cso_position)[0], 
                     'img' => "https://www.pngitem.com/pimgs/m/504-5040528_empty-profile-picture-png-transparent-png.png",
                     'contact_number' => $row->contact_number, 
@@ -371,5 +370,35 @@ if ($this->request->isAJAX()) {
 
 
  }
+
+
+ public function update_officer(){
+
+
+    // $where = array(
+    //     'cso_officer_id' => $this->request->getPost('officer_id')
+    // );
+    
+    // $data = array(
+
+    //     'cso_position' => explode("-",$this->request->getPost('cso_position'))[0],
+    //     'position_number' => explode("-",$this->request->getPost('cso_position'))[1],
+    //     'first_name' => $this->request->getPost('first_name'),
+    //     'middle_name' => ($this->request->getPost('middle_name') == '') ?  '' : $this->request->getPost('middle_name') ,
+    //     'last_name' => $this->request->getPost('last_name'),
+    //     'extension' => ($this->request->getPost('extension') == '') ?  '' : $this->request->getPost('extension') ,
+    //     'cso_position' => $this->request->getPost('cso_position'),
+    //     'contact_number' => $this->request->getPost('officer_contact_number'),
+    //     'email_address' => $this->request->getPost('email'),
+    //     'cso_officer_created' =>  date('Y-m-d H:i:s', time()),
+        
+    
+    // );
+
+
+
+    
+
+}
 }
 

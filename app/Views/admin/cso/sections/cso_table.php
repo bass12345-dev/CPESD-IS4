@@ -10,7 +10,7 @@
                         <select  class=" custom-select mb-3 mt-2 mr-2 pull-left" id="cso_type" onchange="load_cso_by_type(this)"    style="border: 1px solid; width: 150px;" >
                            <option  value="" selected>Select CSO type</option>
                            <?php foreach ($type_of_cso as $row) { ?>
-                           <option  value="<?php echo strtolower($row); ?>"><?php echo $row; ?></option>
+                           <option  value="<?php echo strtolower($row); ?>" ><?php echo $row; ?></option>
                            <?php } ?>
                         </select>
                         

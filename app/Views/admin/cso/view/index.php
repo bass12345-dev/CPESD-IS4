@@ -82,7 +82,9 @@
          </div>
       </div>
       <?php echo view('admin/cso/view/modals/update_cso_information'); ?> 
+      <?php echo view('admin/cso/view/modals/update_officer_modal'); ?> 
       <?php echo view('admin/cso/view_officers/modals/add_officer_modal'); ?>   
+      <?php echo view('admin/cso/modals/update_cso_status_modal'); ?> 
       <?php echo view('includes/scripts.php') ?> 
       <script src="https://balkan.app/js/OrgChart.js"></script>
       <script>
@@ -209,6 +211,8 @@ function load_organization_chart(){
             success: function(data) {
 
                chart.load(data);
+               
+
 
                $('#officers_table').DataTable({
               
@@ -286,6 +290,13 @@ function load_organization_chart(){
                              <li class="mr-3 ">\
                              <a href="javascript:;" class="text-secondary action-icon" \
                              data-id="'+data['cso_officer_id']+'"  \
+                             data-position="'+data['title']+'"  \
+                             data-first-name="'+data['first_name']+'"  \
+                             data-middle-name="'+data['middle_name']+'"  \
+                             data-last-name="'+data['last_name']+'"  \
+                             data-extension="'+data['extension']+'"  \
+                             data-contact="'+data['contact_number']+'"  \
+                             data-email="'+data['email_address']+'"  \
                              id="update-cso-officer"><i class="fa fa-edit"></i></a></li>\
                              </ul>';
              }
@@ -394,7 +405,7 @@ function get_cso_information(){
                                 $('.telephone_number').text(data.telephone_number)
                                 $('.email').text(data.email_address)
                                 $('.classification').html('<span class="status-p sub-button">'+data.type_of_cso+'<span>')
-                                $('.cso_status').html(data.cso_status+' '+'<a href="javascript:;"  id="update-cso-status" class=" text-center ml-3  btn-rounded "><i class = "fa fa-edit" aria-hidden = "true"></i> Update Status</a>')
+                                $('.cso_status').html(data.cso_status+' '+'<a href="javascript:;" data-id="'+data.cso_id+'" data-status="'+data.status+'"  id="update-cso-status"  class=" text-center ml-3  btn-rounded "><i class = "fa fa-edit" aria-hidden = "true"></i> Update Status</a>')
                                 $('#update-cso-information').data('id',data.cso_id);
 
 
@@ -404,12 +415,13 @@ function get_cso_information(){
                                 $('input[name=cso_code]').val(data.cso_code);
                                 $('#cso_type option[value='+data.type_of_cso.toString().toLowerCase()+']').attr('selected','selected'); 
                                 $('input[name=purok]').val(data.purok_number);
-                                $('#barangay option[value='+'TuyabangBajo'+']').attr('selected','selected'); 
+                                $('select[name=barangay]').val(data.barangay);
+                               
                                 $('input[name=contact_person]').val(data.contact_person);
                                 $('input[name=contact_number]').val(data.contact_number);
                                 $('input[name=telephone_number]').val(data.telephone_number);
                                 $('input[name=email_address]').val(data.email_address);
-
+                                
 
 
 
@@ -420,6 +432,98 @@ function get_cso_information(){
                     })
 
                 }
+
+$(document).on('click','a#update-cso-status',function (e) {
+
+      const id = $(this).data('id');
+      const status = $(this).data('status');
+      $('#update_cso_status_modal').modal('show');
+      $('#cso_status option[value='+status+']').attr('selected','selected'); 
+      $('input[name=cso_id]').val(id);
+});
+
+
+$(document).on('click','a#update-cso-officer',function (e) {
+
+const id = $(this).data('id'); 
+const position = $(this).data('position');  
+$('#update_officer_modal').modal('show');
+$('select[name=update_cso_position]').val(position);
+// $('#cso_status option[value='+position+']').attr('selected','selected'); 
+$('input[name=officer_id]').val(id);
+$('input[name=update_first_name]').val($(this).data('first-name'));
+$('input[name=update_middle_name]').val($(this).data('middle-name'));
+$('input[name=update_last_name]').val($(this).data('last-name'));
+$('input[name=update_extension]').val($(this).data('extension'));
+$('input[name=update_contact_number]').val($(this).data('contact'));
+$('input[name=update_email]').val($(this).data('email'));
+});
+
+
+
+$('#update_officer_form').on('submit', function(e) {
+        e.preventDefault();
+
+         $.ajax({
+            type: "POST",
+            url: base_url + 'api/update-officer-information',
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData:false,
+            dataType: 'json',
+            beforeSend: function() {
+                $('.btn-update-cso').text('Please wait...');
+                $('.btn-update-cso').attr('disabled','disabled');
+            },
+             success: function(data)
+            {            
+                if (data.response) {
+                    $('#update_cso_information_modal').modal('hide')
+                    $('.btn-update-cso').text('Save Changes');
+                    $('.btn-update-cso').removeAttr('disabled');
+                    
+                   Toastify({
+                                text: data.message,
+                                className: "info",
+                                style: {
+                                    "background" : "linear-gradient(to right, #00b09b, #96c93d)",
+                                    "height" : "60px",
+                                    "width" : "350px",
+                                    "font-size" : "20px"
+                                }
+                            }).showToast();
+                    
+                    get_cso_information();
+
+                }else {
+                    
+                     $('.btn-update-cso').text('Save Changes');
+                    $('.btn-update-cso').removeAttr('disabled');
+                      
+                   Toastify({
+                                text: data.message,
+                                className: "info",
+                                style: {
+                                    "background" : "linear-gradient(to right, #00b09b, #96c93d)",
+                                    "height" : "60px",
+                                    "width" : "350px",
+                                    "font-size" : "20px"
+                                }
+                            }).showToast();
+                   
+                }
+           },
+            error: function(xhr) { // if error occured
+                alert("Error occured.please try again");
+                $('.btn-update-cso').text('Save Changes');
+                $('.btn-update-cso').removeAttr('disabled');
+            },
+
+
+        });
+
+    });
 
 
 get_cso_information();

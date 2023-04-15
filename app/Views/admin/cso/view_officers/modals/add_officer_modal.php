@@ -38,7 +38,7 @@
                </div>
                <div class="form-group">
                   <div class="col-12">Contact Number<span class="text-danger">*</span></div>
-                  <input type="text" value="09" class="form-control input" name="contact_number"  placeholder=""  data-mask="09000000000" required>
+                  <input type="text" value="09" class="form-control input" name="officer_contact_number"  placeholder=""  data-mask="09000000000" required>
                </div>
                <div class="form-group">
                 <div class="col-12">Email<span class="text-danger">*</span></div>
